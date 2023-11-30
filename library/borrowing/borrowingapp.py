@@ -63,6 +63,3 @@ def delete_loan(id):
     except Exception as e:
         print(str(e))
         return make_response(jsonify({'message': 'error deleting the loan'}), 500)
-
-if __name__ == '__main__':
-    app.run(debug=True)
