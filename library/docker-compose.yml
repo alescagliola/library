@@ -6,7 +6,7 @@ services:
     image: alessio/customerflask_app:1.0.0
     build:
       context: .
-      dockerfile: customers/Dockerfile  # Percorso relativo del Dockerfile
+      dockerfile: customers/Dockerfile                            # Percorso relativo del Dockerfile
     ports:
       - "4000:4000"
     environment:
@@ -29,7 +29,7 @@ services:
     image: alessio/bookflask_app:1.0.0
     build:
       context: .
-      dockerfile: books/Dockerfile                          # Percorso relativo del Dockerfile
+      dockerfile: books/Dockerfile                                  # Percorso relativo del Dockerfile
     ports:
       - "5000:5000"
     environment:
@@ -47,6 +47,25 @@ services:
       - POSTGRES_DB=postgres
     volumes:
       - pgdata:/var/lib/postgresql/data 
+  borrowing_app:                                       ##borrowing
+    container_name: borrowing_app
+    image: alessio/borrowing_app:1.0.0
+    build:
+      context: .
+      dockerfile: borrowing/Dockerfile                                   # Percorso relativo del Dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/borrowingdb                     # Connessione al database MongoDB
+    depends_on:
+      - bookflask_db
+  borrowing_db:
+    container_name: borrowing_db
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodbdata:/data/db                                            # Volume per dati persistenti di MongoDB
 
 volumes:
   pgdata: {}
