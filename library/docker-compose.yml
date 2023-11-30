@@ -1,0 +1,70 @@
+version: "3.9"
+
+services:
+  customerflask_app:
+    container_name: customerflask_app
+    image: alessio/customerflask_app:1.0.0
+    build:
+      context: .
+      dockerfile: customers/Dockerfile  # Percorso relativo del Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      - DB_URL=postgresql://postgres:postgres@customerflask_db:5432/postgres
+    depends_on:
+      - customerflask_db
+  customerflask_db:
+    container_name: customerflask_db
+    image: postgres:12
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data 
+  bookflask_app:
+    container_name: bookflask_app
+    image: alessio/bookflask_app:1.0.0
+    build:
+      context: .
+      dockerfile: books/Dockerfile                          # Percorso relativo del Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_URL=postgresql://postgres:postgres@bookflask_db:5433/postgres
+    depends_on:
+      - bookflask_db
+  bookflask_db:
+    container_name: bookflask_db
+    image: postgres:12
+    ports:
+      - "5433:5433"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data 
+
+volumes:
+  pgdata: {}
+
+
+
+#####
+# docker compose up -d customerflask_db
+# docker ps -a
+
+#tableplus
+# localhost 5432
+# tutto postgres
+
+# docker compose build 
+# docker compose up customerflask_app       ||    docker compose up --build customerflask_app
+# http://localhost:4000/test
+
+# postman
+#docker ps -a
+#docker rm 
