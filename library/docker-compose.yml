@@ -58,7 +58,7 @@ services:
     environment:
       - MONGO_URI=mongodb://mongo:27017/borrowingdb                     # Connessione al database MongoDB
     depends_on:
-      - bookflask_db
+      - borrowing_db
   borrowing_db:
     container_name: borrowing_db
     image: mongo:latest
@@ -73,7 +73,7 @@ volumes:
 
 
 #####
-# docker compose up -d customerflask_db
+# docker compose up -d servizio_db
 # docker ps -a
 
 #tableplus
@@ -81,7 +81,7 @@ volumes:
 # tutto postgres
 
 # docker compose build 
-# docker compose up customerflask_app       ||    docker compose up --build customerflask_app
+# docker compose up servizio_app       ||    docker compose up --build servizio_app
 # http://localhost:4000/test
 
 # postman
